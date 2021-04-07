@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  mariadb:
+    tty: true
+    image: docker.io/bitnami/mariadb:10.1-debian-10
+    container_name: mysql
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=onstate_db
+      - MARIADB_DATABASE=onstate_db
+      - MARIADB_PASSWORD=summer2020
+    ports:
+      - 3306:3306
+    volumes:
+      - database_onstate_db:/bitnami/mariadb/data
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  myapp:
+    tty: true
+    image: docker.io/bitnami/laravel:7-debian-10
+    container_name: laravel
+    environment:
+      - DB_HOST=mariadb
+      - DB_USERNAME=onstate_db
+      - DB_DATABASE=onstate_db
+      - DB_PASSWORD=summer2020
+    depends_on:
+      - mariadb
+    ports:
+      - 8000:3000
+    volumes:
+      - ./:/app
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  phpmyadmin:
+    tty: true
+    image: docker.io/bitnami/phpmyadmin:5-debian-10
+    container_name: phpmyadmin
+    ports:
+      - "8081:8080"
+      - "443:8443"
+    depends_on:
+      - mariadb
+    deploy:
+      mode: replicated
+      replicas: 1
+
+volumes:
+  database_onstate_db:
+    driver: "local"
