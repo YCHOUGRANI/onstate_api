@@ -24,9 +24,9 @@ The php script parse-products-list.php : (populate the products table without du
 
             a. First call the shopify API via curl
 	    
-            b. Store the resultset into associate array $products_json_decode = json_decode($products_json, true);
+            b. Store the resultset into associative array $products_json_decode = json_decode($products_json, true);
 	    
-            c. Loop through the associal array and for each record
+            c. Loop through the associative array and for each record
 	    
                    1. check if the current record already exist into products table. 
                    
