@@ -35,6 +35,10 @@ The php script parse-products-list.php : (populate the products table without du
 		      $sql_check_ref = " select shopify_id  from products  where shopify_id = $shopify_id  ";
 		      
                    2. If the record doesn't exist then insert into products table
+
+
+![onstate_api_db](https://user-images.githubusercontent.com/61298854/113988669-9bdd3e80-9847-11eb-8752-d498f5af6318.PNG)
+
                    
 
 
