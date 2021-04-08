@@ -19,14 +19,23 @@ Which contains two containers one for laravel 7 and one for mysql. I added an ot
 8.  docker exec laravel php database/parse-products-list.php
 
 I developed the script only for products but the principle is the same for other tables (categories, variants, options, images ....)
+
 The php script parse-products-list.php : (populate the products table without duplication)
+
             a. First call the shopify API via curl
+	    
             b. Store the resultset into associate array $products_json_decode = json_decode($products_json, true);
+	    
             c. Loop through the associal array and for each record
+	    
                    1. check if the current record already exist into products table. 
+                   
                       $shopify_id = $product['id'];
-	                    $sql_check_ref = " select shopify_id  from products  where shopify_id = $shopify_id  ";
+		      
+		      $sql_check_ref = " select shopify_id  from products  where shopify_id = $shopify_id  ";
+		      
                    2. If the record doesn't exist then insert into products table
+                   
 
 
 
