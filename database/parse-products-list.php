@@ -3,9 +3,9 @@
 ini_set('max_execution_time', 6 * 60);
 date_default_timezone_set('Europe/London');
 header('Content-type: text/html; charset=utf-8');
-//ych
-//$message = shell_exec("/bin/bash ./get-products.sh");
-$products_json = utf8_encode(file_get_contents("./products.json"));
+
+$message = shell_exec("/bin/bash /app/database/get-products.sh");
+$products_json = utf8_encode(file_get_contents("/app/database/products.json"));
 $products_json_decode = json_decode($products_json, true);
 
 $mysqli = new mysqli("mariadb", "onstate_db", "summer2020", "onstate_db");
@@ -20,7 +20,7 @@ foreach ($products_json_decode['products'] as $product) {
 	$is_product_exists = false;
 	$shopify_id = $product['id'];
 	$sql_check_ref = " select shopify_id  from products  where shopify_id = $shopify_id  ";
-	echo "\n" . $sql_check_ref;
+	//echo "\n" . $sql_check_ref;
 	$result = $mysqli->query($sql_check_ref);
 
 	// Associative array
@@ -54,7 +54,6 @@ foreach ($products_json_decode['products'] as $product) {
 			$ls_template_suffix = $product['template_suffix'];
 			$ls_tags = $product['tags'];
 			$ls_admin_graphql_api_id = $product['admin_graphql_api_id'];
-			//$stmt->bind_param("issssssssssi", $ls_shopify_id, $ls_vendor, $ls_title, $ls_body_html, $ls_created_at, $ls_handle, $ls_published_scope, $ls_status, $ls_updated_at, $ls_template_suffix, $ls_tags, $ls_admin_graphql_api_id);
 
 			$stmt->execute();
 		} else {
